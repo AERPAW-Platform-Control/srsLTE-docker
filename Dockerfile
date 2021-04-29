@@ -20,16 +20,21 @@ RUN apt-get update \
      iproute2 \
      iptables \
      unzip \
+     git \
  && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /srslte
 
-git clone https://github.com/jgiovatto/srsLTE.git
+RUN git clone https://github.com/jgiovatto/srsLTE.git
 
-WORKDIR /srslte/build
+WORKDIR /srslte/srsLTE/
+
+RUN mkdir build
+
+WORKDIR /srslte/srsLTE/build
 
 RUN cmake ../ \
- && make install
+ && make && make install
 
 # Update dynamic linker
 RUN ldconfig
